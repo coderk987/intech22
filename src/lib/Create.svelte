@@ -40,6 +40,10 @@
 			error = 'Error: No Due Date Assigned';
 			return false;
 		}
+		if (grade > 12 || isNaN(grade)) {
+			err = 'Error: Invalid Class';
+			return;
+		}
 		return true;
 	}
 

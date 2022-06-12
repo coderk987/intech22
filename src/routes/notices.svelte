@@ -145,6 +145,7 @@
 		border-top-left-radius: 20px;
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
+		cursor: pointer;
 	}
 	.add > i {
 		background-color: #00cc99;

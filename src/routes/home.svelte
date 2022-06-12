@@ -13,13 +13,12 @@
 	let isAdmin;
 
 	onMount(() => {
-		const docRef = getDoc(doc(db, 'users', $user.email)).then((doc) => {
-			isAdmin = doc.data().isAdmin;
-		});
-
 		if ($user === '') {
 			goto('/login');
 		}
+		const docRef = getDoc(doc(db, 'users', $user.email)).then((doc) => {
+			isAdmin = doc.data().isAdmin;
+		});
 	});
 
 	let tab = 1;

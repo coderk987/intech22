@@ -17,7 +17,11 @@
 
 <div class="bg" on:click|self>
 	<div class="inputs" transition:fade={{ duration: 400 }}>
-		<p>Title:</p>
+		<div class="top">
+			<h3>Add Notice:</h3>
+			<i class="bi bi-x" on:click|self />
+		</div>
+		<p style="margin-top: 0;">Title:</p>
 		<input type="text" bind:value={title} />
 		<p>Content:</p>
 		<textarea bind:value={con} cols="30" rows="10" style="resize: vertical" />
@@ -71,5 +75,22 @@
 		font-weight: bolder;
 		color: #b8fae9;
 		border-radius: 5px;
+	}
+	i {
+		background-color: crimson;
+		border: 1px solid currentColor;
+		width: max-content;
+		padding: 0 0.1em;
+		align-self: flex-end;
+		margin: 0;
+		font-size: 1.5em;
+	}
+	h3 {
+		margin: 0;
+	}
+	.top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 	}
 </style>

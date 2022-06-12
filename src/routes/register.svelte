@@ -21,6 +21,14 @@
 			err = 'Error: Invalid Class';
 			return;
 		}
+		if (fields[3] === null) {
+			err = 'Error: Invalid Class';
+			return;
+		}
+		if (fields[3] > 12 || isNaN(fields[3])) {
+			err = 'Error: Invalid Class';
+			return;
+		}
 	}
 
 	const signInEmail = async () => {
