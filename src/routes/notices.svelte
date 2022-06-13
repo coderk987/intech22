@@ -77,12 +77,14 @@
 						{/if}
 					</h3>
 					<div class="down">
-						<i
-							class="bi bi-trash3"
-							on:click={() => {
-								deleteNotice(item.id);
-							}}
-						/>
+						{#if isAdmin}
+							<i
+								class="bi bi-trash3"
+								on:click={() => {
+									deleteNotice(item.id);
+								}}
+							/>
+						{/if}
 						<h3 class="time">{item.date.toDate().toLocaleString()}</h3>
 					</div>
 				</div>
