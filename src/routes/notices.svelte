@@ -76,7 +76,7 @@
 							Hide content
 						{/if}
 					</h3>
-					<div class="down">
+					<div class="down" class:end={!isAdmin}>
 						{#if isAdmin}
 							<i
 								class="bi bi-trash3"
@@ -196,5 +196,8 @@
 		margin: 0 0.5em;
 		border-radius: 5px;
 		color: whitesmoke;
+	}
+	.end {
+		justify-content: flex-end;
 	}
 </style>
