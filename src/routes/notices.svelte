@@ -1,13 +1,22 @@
 <script>
 	import { db, auth } from '../firebase.js';
-	import { collection, onSnapshot, getDoc, doc } from 'firebase/firestore';
+	import {
+		collection,
+		onSnapshot,
+		getDoc,
+		doc,
+		orderBy,
+		query,
+		deleteDoc
+	} from 'firebase/firestore';
 	import { goto } from '$app/navigation';
 	import Header from '../lib/header.svelte';
 	import NoticeModal from '../lib/NoticeModal.svelte';
-	import { slide } from 'svelte/transition';
+	import { slide, scale } from 'svelte/transition';
 	import { user } from '../stores';
 	import Loader from '../lib/Loader.svelte';
 	import { onMount } from 'svelte';
+	import { flip } from 'svelte/animate';
 
 	let isAdmin;
 
@@ -20,7 +29,7 @@
 		});
 	});
 
-	let q = collection(db, 'notices');
+	let q = query(collection(db, 'notices'), orderBy('date'));
 	let list = [];
 	const unsubscribe = onSnapshot(q, (querySnapshot) => {
 		let fb = [];
@@ -32,6 +41,10 @@
 	});
 
 	let addModal;
+
+	const deleteNotice = async (id) => {
+		await deleteDoc(doc(db, 'notices', id));
+	};
 </script>
 
 {#if $user}
@@ -45,8 +58,8 @@
 		{/if}
 		<Header />
 		<div class="items" in:slide>
-			{#each list as item, id}
-				<div class="item">
+			{#each list as item, id (item.id)}
+				<div class="item" out:scale|local animate:flip={{ duration: 500 }}>
 					<h2 class="title">
 						{item.title}
 					</h2>
@@ -63,7 +76,15 @@
 							Hide content
 						{/if}
 					</h3>
-					<h3 class="time">{item.date.toDate().toLocaleString()}</h3>
+					<div class="down">
+						<i
+							class="bi bi-trash3"
+							on:click={() => {
+								deleteNotice(item.id);
+							}}
+						/>
+						<h3 class="time">{item.date.toDate().toLocaleString()}</h3>
+					</div>
 				</div>
 			{/each}
 		</div>
@@ -156,5 +177,22 @@
 		background-color: #212121;
 		padding: 0.5em;
 		border-radius: 5px;
+	}
+	.down {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.down > i {
+		background-color: rgb(243, 52, 90);
+		border: 2px solid rgb(181, 35, 64);
+		width: max-content;
+		padding: 0.3em 0.5em;
+		margin: 0;
+		align-self: center;
+		font-size: 1.2em;
+		margin: 0 0.5em;
+		border-radius: 5px;
+		color: whitesmoke;
 	}
 </style>

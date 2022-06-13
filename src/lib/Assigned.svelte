@@ -1,9 +1,12 @@
 <script>
 	import { db, auth } from '../firebase.js';
-	import { collection, onSnapshot, where, query } from 'firebase/firestore';
+	import { collection, onSnapshot, where, query, deleteDoc, doc } from 'firebase/firestore';
 	import { scale } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import { user } from '../stores.js';
+	import { flip } from 'svelte/animate';
+
+	export let lmaoAdmin;
 
 	function isComplete(i) {
 		let a = i.isDone;
@@ -26,11 +29,15 @@
 		list = fb;
 		list = list.filter(isComplete);
 	});
+
+	const deleteAssigned = async (id) => {
+		await deleteDoc(doc(db, 'assignments', id));
+	};
 </script>
 
 <div class="ass" in:scale>
-	{#each list as item}
-		<div class="item">
+	{#each list as item (item.id)}
+		<div class="item" out:scale|local animate:flip={{ duration: 500 }}>
 			<div class="itemTop">
 				<h3
 					on:click={() => {
@@ -44,6 +51,14 @@
 			</div>
 			<div class="itemDown">
 				<h4 class="due">Due: {item.deadline.toDate().toLocaleString()}</h4>
+				{#if lmaoAdmin}
+					<i
+						class="bi bi-trash3"
+						on:click={() => {
+							deleteAssigned(item.id);
+						}}
+					/>
+				{/if}
 			</div>
 		</div>
 	{/each}
@@ -76,6 +91,8 @@
 		padding: 0.2em 0.5em;
 		border-radius: 20px;
 		margin-bottom: 0;
+		position: relative;
+		min-width: max-content;
 	}
 	.title {
 		color: #00cc99;
@@ -83,6 +100,13 @@
 		font-weight: bolder;
 		margin-bottom: 0;
 		cursor: pointer;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.title:hover {
+		color: #3bdfc4;
+		transition: 0.2;
 	}
 	.due {
 		color: rgb(240, 58, 94);
@@ -91,6 +115,19 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
+	}
+	i {
+		background-color: rgb(243, 52, 90);
+		border: 2px solid rgb(181, 35, 64);
+		width: max-content;
+		padding: 0.3em 0.5em;
+		margin: 0;
+		align-self: center;
+		font-size: 1.2em;
+		margin: 0 0.5em;
+		border-radius: 5px;
+		color: whitesmoke;
+		cursor: pointer;
 	}
 	@media screen and (max-width: 680px) {
 		.item {

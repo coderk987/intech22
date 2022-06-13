@@ -62,7 +62,7 @@
 	}
 	.type {
 		margin-right: 0.5em;
-		background-color: #7ddbc2;
+		background-color: rgb(125, 219, 194);
 		padding: 0.2em 0.5em;
 		border-radius: 20px;
 		margin-bottom: 0;

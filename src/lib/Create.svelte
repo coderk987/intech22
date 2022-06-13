@@ -41,7 +41,7 @@
 			return false;
 		}
 		if (grade > 12 || isNaN(grade)) {
-			err = 'Error: Invalid Class';
+			error = 'Error: Invalid Class';
 			return;
 		}
 		return true;

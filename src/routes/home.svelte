@@ -60,7 +60,7 @@
 		</div>
 
 		{#if tab == 1}
-			<Assigned />
+			<Assigned lmaoAdmin={isAdmin} />
 		{:else if tab == 2}
 			{#if isAdmin}
 				<Create />
@@ -95,6 +95,7 @@
 	}
 	.tabs > h2 {
 		font-size: xx-large;
+		cursor: default;
 	}
 	.active {
 		color: #00cc99;

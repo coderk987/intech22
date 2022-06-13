@@ -10,6 +10,8 @@
 		where,
 		arrayRemove
 	} from 'firebase/firestore';
+	import { scale } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 
 	export let id;
 
@@ -71,8 +73,8 @@
 	</div>
 
 	<div class="items">
-		{#each list as item}
-			<div class="item">
+		{#each list as item (item.id)}
+			<div class="item" out:scale|local animate:flip={{ duration: 500 }}>
 				<div class="itemTop">
 					<h3><a href={item.file} target="_blank">Attached File</a></h3>
 					<h4>Submitted By{item.by}</h4>

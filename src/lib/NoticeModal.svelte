@@ -6,11 +6,12 @@
 	let title;
 	let con;
 
+	$: console.log(title, serverTimestamp());
 	const AddNotice = async () => {
 		const docRef = await addDoc(collection(db, 'notices'), {
 			title: title,
 			content: con,
-			date: serverTimestamp()
+			date: new Date()
 		});
 	};
 </script>
