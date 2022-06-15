@@ -9,7 +9,7 @@
 	import { browser } from '$app/env';
 
 	let modal = false;
-	let tab;
+	let tab = 3;
 	let tempUser = browser && JSON.parse(localStorage.getItem('curUser'));
 	$: {
 		console.log(tab, tempUser);

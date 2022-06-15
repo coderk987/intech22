@@ -139,12 +139,17 @@
 		font-size: larger;
 		border-radius: 10px;
 		max-width: 95vw;
+		width: 600px;
 		box-sizing: border-box;
+	}
+	.startBox > p {
+		margin: 1em 0.5em;
 	}
 	.startButton {
 		display: flex;
 		justify-content: center;
 		width: 100%;
+		font-size: larger;
 	}
 	.startButton > button {
 		min-width: max-content;
