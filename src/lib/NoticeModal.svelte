@@ -86,9 +86,6 @@
 		margin: 0;
 		font-size: 1.5em;
 	}
-	h3 {
-		margin: 0;
-	}
 	.top {
 		display: flex;
 		justify-content: space-between;
