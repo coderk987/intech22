@@ -133,7 +133,7 @@
 			</div>
 
 			<p>Reference:</p>
-			<label for="attachFile">
+			<label for="attachFile" class:invis={file && file[0]}>
 				<h3 class="attachLabel"><i class="bi bi-paperclip" /> Attach File</h3>
 				<input type="file" bind:files={file} id="attachFile" on:change={handleFile} />
 			</label>
@@ -157,6 +157,9 @@
 </div>
 
 <style>
+	.invis {
+		display: none;
+	}
 	.create {
 		display: flex;
 		justify-content: center;
@@ -219,7 +222,7 @@
 	.file {
 		display: flex;
 		background-color: #04765a;
-		padding: 0.5em;
+		padding: 0.3em 0.5em;
 		margin: 0;
 		width: max-content;
 		border-radius: 5px;
