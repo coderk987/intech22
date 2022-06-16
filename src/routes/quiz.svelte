@@ -1,4 +1,6 @@
 <script context="module">
+	/*
+	<script context="module">
 	export async function load({ fetch }) {
 		const url = 'https://opentdb.com/api.php?amount=5&type=multiple';
 		const res = await fetch(url);
@@ -16,13 +18,14 @@
 			error: new Error('Could not fetch Guides')
 		};
 	}
+	*/
 </script>
 
 <script>
 	import Header from '../lib/header.svelte';
 	import { scale, slide } from 'svelte/transition';
 
-	export let quiz = [];
+	let quiz = [];
 	let ques = [];
 	let curq = -1;
 	let pts;
@@ -30,7 +33,11 @@
 	let wrongAns = [];
 	let tempBool = false;
 
-	const beginQuiz = () => {
+	const beginQuiz = async () => {
+		const res = await fetch(`https://opentdb.com/api.php?amount=5&type=multiple`);
+		const temp = await res.json();
+		console.log(temp);
+		quiz = temp.results;
 		curq = 0;
 		pts = 0;
 		quiz.forEach((el) => {
@@ -73,7 +80,7 @@
 				</div>
 			</div>
 		{:else if over}
-			<div class="score" transition:scale>
+			<div class="score" in:scale>
 				<h2 class="points">You Scored {pts} / 5 Points</h2>
 				{#if pts == 5}
 					<!-- svelte-ignore a11y-img-redundant-alt -->
@@ -183,6 +190,7 @@
 	.questionBox > h3 {
 		color: #bae3d8;
 		align-self: center;
+		cursor: default;
 	}
 	.score {
 		background-color: rgb(66, 66, 66);
@@ -216,5 +224,11 @@
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
+	}
+	@media screen and (max-width: 500px) {
+		.startButton > button {
+			font-size: 1em;
+			width: 50%;
+		}
 	}
 </style>

@@ -11,12 +11,7 @@
 	let modal = false;
 	let tab = 3;
 	let tempUser = browser && JSON.parse(localStorage.getItem('curUser'));
-	$: {
-		console.log(tab, tempUser);
-	}
 	onMount(() => {
-		console.log(tempUser);
-
 		let path = $page.url.pathname;
 		if (path == '/home') tab = 2;
 		else if (path == '/quiz') tab = 3;

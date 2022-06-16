@@ -20,6 +20,8 @@
 
 	let isAdmin;
 
+	const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+	let du = 0;
 	onMount(() => {
 		if ($user === '') {
 			goto('/login');
@@ -27,6 +29,7 @@
 		const docRef = getDoc(doc(db, 'users', $user.email)).then((doc) => {
 			isAdmin = doc.data().isAdmin;
 		});
+		du = 500;
 	});
 
 	let q = query(collection(db, 'notices'), orderBy('date'));
@@ -59,14 +62,20 @@
 		<Header />
 		<div class="items" in:slide>
 			{#each list as item, id (item.id)}
-				<div class="item" out:scale|local animate:flip={{ duration: 500 }}>
+				<div class="item" out:scale|local animate:flip={{ duration: du }}>
 					<h2 class="title">
 						{item.title}
 					</h2>
-					<h4 class="content" class:invisible={!list[id].show}>{item.content}</h4>
+					<h4 class="content" class:invisible={!list[id].show}>
+						{item.content}
+					</h4>
 					<h3
-						on:click={() => {
+						on:click={async () => {
+							du = 0;
+							await delay(1);
 							list[id].show = !list[id].show;
+							await delay(1);
+							du = 500;
 						}}
 						style="margin:0.2em 0.5em;"
 					>
@@ -184,6 +193,10 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+	.down > h3 {
+		margin: 0;
+		align-self: center;
 	}
 	.down > i {
 		background-color: rgb(243, 52, 90);

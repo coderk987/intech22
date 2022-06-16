@@ -79,6 +79,7 @@
 		flex-direction: column;
 		align-items: center;
 		overflow-y: auto;
+		overflow-x: hidden;
 	}
 	.itemTop {
 		display: flex;
