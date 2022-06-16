@@ -94,4 +94,9 @@
 		margin-bottom: 5px;
 		color: #b8fae9;
 	}
+	@media screen and (max-width: 500px) {
+		.search {
+			padding: 1.5em 0.5em;
+		}
+	}
 </style>

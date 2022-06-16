@@ -7,3 +7,5 @@ export let user = writable(tempSet ? JSON.parse(tempSet) : '');
 if (browser) {
 	user.subscribe((u) => (localStorage.curUser = JSON.stringify(u)));
 }
+
+export let firstTime = writable(false);

@@ -2,13 +2,15 @@
 	import { db } from '../firebase';
 	import { getDoc, doc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
-	import { user } from '../stores.js';
+	import { user, firstTime } from '../stores.js';
+	import { goto } from '$app/navigation';
 
 	import Header from '../lib/header.svelte';
 	import Assigned from '../lib/Assigned.svelte';
 	import Completed from '../lib/Completed.svelte';
 	import Create from '../lib/Create.svelte';
 	import Loader from '../lib/Loader.svelte';
+	import First from '../lib/First.svelte';
 
 	let isAdmin;
 
@@ -25,6 +27,9 @@
 </script>
 
 {#if $user}
+	{#if $firstTime}
+		<First />
+	{/if}
 	<div class="home">
 		<Header />
 

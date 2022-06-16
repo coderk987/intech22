@@ -3,6 +3,7 @@
 	import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 	import { goto } from '$app/navigation';
 	import { setDoc, doc } from 'firebase/firestore';
+	import { firstTime } from '../stores';
 
 	let fields = [null, null, null, null, false];
 
@@ -43,6 +44,7 @@
 					isAdmin: fields[4],
 					name: fields[1]
 				});
+				$firstTime = true;
 				goto('/login');
 			})
 			.catch((error) => {
@@ -185,11 +187,18 @@
 		width: 50%;
 	}
 	@media screen and (max-width: 500px) {
-		input {
+		input,
+		select {
 			margin: 1em;
 		}
 		.inputs > p {
 			margin: 0 1em;
+		}
+		.infoChild > p {
+			margin: 0 1em;
+		}
+		button.create {
+			width: 45%;
 		}
 	}
 	@media screen and (max-width: 391px) {
@@ -205,6 +214,13 @@
 		}
 		button.create {
 			padding: 0.5em 20px;
+		}
+		.infoChild > p {
+			margin: 0 0.7em;
+		}
+		.infoChild > input,
+		.infoChild > select {
+			margin: 0.7em 0.5em;
 		}
 	}
 </style>
