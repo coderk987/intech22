@@ -12,44 +12,51 @@
 	function isValid() {
 		if (fields[1] === null) {
 			err = 'Error: Invalid Username';
-			return;
+			return false;
+		}
+		if (fields[1].indexOf(' ') >= 0) {
+			err = 'Error: Username may not contain Spaces';
+			return false;
 		}
 		if (fields[1].length > 10) {
 			err = 'Error: Username too Long';
-			return;
+			return false;
 		}
 		if (fields[3] === null) {
 			err = 'Error: Invalid Class';
-			return;
+			return false;
 		}
 		if (fields[3] === null) {
 			err = 'Error: Invalid Class';
-			return;
+			return false;
 		}
 		if (fields[3] > 12 || isNaN(fields[3])) {
 			err = 'Error: Invalid Class';
-			return;
+			return false;
 		}
+		return true;
 	}
 
 	const signInEmail = async () => {
-		createUserWithEmailAndPassword(auth, fields[0], fields[2])
-			.then(async (cred) => {
-				console.log(cred.user);
-				updateProfile(auth.currentUser, {
-					displayName: `${fields[1]} ${fields[3]}`
+		if (isValid()) {
+			createUserWithEmailAndPassword(auth, fields[0], fields[2])
+				.then(async (cred) => {
+					console.log(cred.user);
+					updateProfile(auth.currentUser, {
+						displayName: `${fields[1]} ${fields[3]}`
+					});
+					await setDoc(doc(db, 'users', fields[0]), {
+						class: fields[3],
+						isAdmin: fields[4],
+						name: fields[1]
+					});
+					$firstTime = true;
+					goto('/login');
+				})
+				.catch((error) => {
+					err = error.message;
 				});
-				await setDoc(doc(db, 'users', fields[0]), {
-					class: fields[3],
-					isAdmin: fields[4],
-					name: fields[1]
-				});
-				$firstTime = true;
-				goto('/login');
-			})
-			.catch((error) => {
-				err = error.message;
-			});
+		}
 	};
 </script>
 

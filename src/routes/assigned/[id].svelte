@@ -29,7 +29,6 @@
 	const unsub = onSnapshot(doc(db, 'assignments', id), (doc) => {
 		cur = doc.data();
 	});
-
 	let file;
 	let prog;
 	let url = '';
@@ -54,6 +53,7 @@
 
 	const handleFile = () => {
 		if (file && file[0]) {
+			cantClick = true;
 			const storageRef = ref(storage, `${id}/${file[0].name}`);
 			console.log(file);
 			const uploadTask = uploadBytesResumable(storageRef, file[0]);
@@ -134,7 +134,7 @@
 					{#if userSubmit === null}
 						<div class="top">
 							<h2 class="my">My Work</h2>
-							<button on:click={handleSubmit}>Submit Assignment</button>
+							<button on:click={handleSubmit} disabled>Submit Assignment</button>
 						</div>
 						<div class="fileIn">
 							<label for="attachFile">
